@@ -1,5 +1,5 @@
 import '../styles/App.scss';
-// import blackboard from './images/blackboard.jpg';
+
 
 function App() {
   return    ( <div className="page">
