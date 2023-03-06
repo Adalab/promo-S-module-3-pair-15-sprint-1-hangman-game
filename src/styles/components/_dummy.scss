@@ -34,7 +34,7 @@ $dummyTransitionTime: 1s;
     color: $dummyDisabledColor;
     transition: color $dummyTransitionTime ease;
     &::before {
-      content: '×';
+      content: "×";
     }
   }
 
@@ -137,4 +137,10 @@ $dummyTransitionTime: 1s;
       }
     }
   }
+}
+.button {
+  width: fit-content;
+  height: 40px;
+  color: black;
+  padding: 0 20px;
 }
