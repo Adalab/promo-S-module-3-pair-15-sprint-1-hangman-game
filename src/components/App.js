@@ -6,9 +6,27 @@ import {useState} from 'react';
 function App() {
 
   const [numberOfErrors,setNumberOfErrors] = useState(0); 
+  const [lastLetter,setlastLetter] = useState(''); 
+
   const handleClickIncrementar= ()=> {
     setNumberOfErrors(numberOfErrors+1);
   }
+
+  const handleChangeLastLetter = (event) =>{
+    const inputValue = event.target.value;
+    if(isValidname(inputValue)){
+      setlastLetter(inputValue);
+    }else{
+
+    }
+    console.log(setlastLetter);
+    console.log(isValidname(inputValue));
+  }
+  
+  const isValidname = (name) =>{
+    return /^[a-zA-ZÀ-ÿ\u00f1\u00d1]/.test(name);
+  }
+ 
 
   return    ( <div className="page">
       <header>
@@ -50,6 +68,8 @@ function App() {
               type="text"
               name="last-letter"
               id="last-letter"
+              value={lastLetter}
+              onChange={handleChangeLastLetter}
             />
           </form>
         </section>
