@@ -7,6 +7,21 @@ function App() {
 
   const [numberOfErrors,setNumberOfErrors] = useState(0); 
   const [lastLetter,setlastLetter] = useState(''); 
+  const [word,setWord] = useState('katakroker'); 
+  const [userLetters,setuserLetters] = useState([]); 
+  const newLetter = [];
+
+  const renderSolutionLetters = () =>{
+    const wordLetters = word.split('');
+    return wordLetters.map((eachLetter, index) =>{
+      return (<li className='letter' key={index}></li>);
+    } )
+  }
+
+  userLetters = ['a', 'e', 'i']
+
+  const nuevoArray = ['z', 'x', ...userLetters, 'o', 'u']
+  
 
   const handleClickIncrementar= ()=> {
     setNumberOfErrors(numberOfErrors+1);
@@ -16,12 +31,15 @@ function App() {
     const inputValue = event.target.value;
     if(isValidname(inputValue)){
       setlastLetter(inputValue);
-      console.log(isValidname(inputValue));
-    }else{
 
+      setuserLetters ([...userLetters, inputValue]);
+
+      // const nuevoArray = userLetters.push(inputValue);
+      // setuserLetters(nuevoArray);
+    
+    }else{
     }
-    console.log(setlastLetter);
-    console.log(isValidname(inputValue));
+
   }
   
   const isValidname = (name) =>{
@@ -37,7 +55,8 @@ function App() {
         <section>
           <div className="solution">
             <h2 className="title">Solución:</h2>
-            <ul className="letters">
+            <ul className="letters">{renderSolutionLetters()}</ul>
+            {/* <ul className="letters">
               <li className="letter">k</li>
               <li className="letter">a</li>
               <li className="letter"></li>
@@ -48,7 +67,7 @@ function App() {
               <li className="letter">k</li>
               <li className="letter">e</li>
               <li className="letter">r</li>
-            </ul>
+            </ul> */}
           </div>
           <div className="error">
             <h2 className="title">Letras falladas:</h2>
