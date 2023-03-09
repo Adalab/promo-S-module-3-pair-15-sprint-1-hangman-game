@@ -16,6 +16,7 @@ function App() {
     const inputValue = event.target.value;
     if(isValidname(inputValue)){
       setlastLetter(inputValue);
+      console.log(isValidname(inputValue));
     }else{
 
     }
@@ -24,7 +25,7 @@ function App() {
   }
   
   const isValidname = (name) =>{
-    return /^[a-zA-ZÀ-ÿ\u00f1\u00d1]/.test(name);
+    return /^[a-zA-ZÀ-ÿ\u00f1\u00d1]*$/.test(name);
   }
  
 
