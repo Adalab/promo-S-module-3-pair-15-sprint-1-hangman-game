@@ -1,5 +1,5 @@
 import '../styles/App.scss';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 
 
@@ -7,21 +7,41 @@ function App() {
 
   const [numberOfErrors,setNumberOfErrors] = useState(0); 
   const [lastLetter,setlastLetter] = useState(''); 
-  const [word,setWord] = useState('katakroker'); 
+  const [word,setWord] = useState(''); 
   const [userLetters,setuserLetters] = useState([]); 
   const newLetter = [];
+
+useEffect(() => {
+    fetch('https://dev.adalab.es/api/random/word')
+      .then((response) => response.json())
+      .then((responseData) => {
+        setWord(responseData.word);
+      });
+  }, []);
+
 
   const renderSolutionLetters = () =>{
     const wordLetters = word.split('');
     return wordLetters.map((eachLetter, index) =>{
-      return (<li className='letter' key={index}></li>);
+      if(userLetters.includes(eachLetter)){
+        return (<li className='letter' key={index}>{eachLetter}</li>);
+      }else{
+        return (<li className='letter' key={index}></li>);
+      };
     } )
   }
 
-  userLetters = ['a', 'e', 'i']
+  const renderErrorLetters = () =>{
+    return userLetters
+      .filter((eachLetter) => !(word.includes(eachLetter)))
+      .map( (eachLetter, index) => {return <li className="letter" key={index}>{eachLetter}</li>})
+  }
 
-  const nuevoArray = ['z', 'x', ...userLetters, 'o', 'u']
-  
+  const counterErrorLetters = () =>{
+    return userLetters
+      .filter((eachLetter) => !(word.includes(eachLetter)))
+      .length 
+  }
 
   const handleClickIncrementar= ()=> {
     setNumberOfErrors(numberOfErrors+1);
@@ -31,7 +51,6 @@ function App() {
     const inputValue = event.target.value;
     if(isValidname(inputValue)){
       setlastLetter(inputValue);
-
       setuserLetters ([...userLetters, inputValue]);
 
       // const nuevoArray = userLetters.push(inputValue);
@@ -72,11 +91,12 @@ function App() {
           <div className="error">
             <h2 className="title">Letras falladas:</h2>
             <ul className="letters">
-              <li className="letter">f</li>
+              {renderErrorLetters()}
+              {/* <li className="letter">f</li>
               <li className="letter">q</li>
               <li className="letter">h</li>
               <li className="letter">p</li>
-              <li className="letter">x</li>
+              <li className="letter">x</li> */}
             </ul>
           </div>
           <form className="form">
@@ -93,7 +113,7 @@ function App() {
             />
           </form>
         </section>
-        <section className={`dummy error-${numberOfErrors}`}>
+        <section className={`dummy error-${counterErrorLetters()}`}>
           <span className="error-13 eye"></span>
           <span className="error-12 eye"></span>
           <span className="error-11 line"></span>
